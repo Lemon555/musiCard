@@ -1,0 +1,18 @@
+.row
+  #custom-search-input.col-xs-12
+    form[action="" method=""]
+      .input-group
+        input.form-control[type="text" placeholder="Search a song..."]
+        .input-group-btn
+          button.btn.btn-success[type="submit"]
+            i.glyphicon.glyphicon-search
+.row
+  .col-xs-12[style="margin-top: 50px"]
+    - @data&.song&.each do |song|
+    .col-xs-6
+      iframe[src="https://embed.spotify.com/?uri=spotify:track:5JunxkcjfCYcY7xJ29tLai" width="100%" height="100" frameborder="0" allowtransparency="true"]
+
+    .col-xs-6
+      button.btn.btn-success[type="button" data-toggle="modal" data-target="#viewAlbumPic"]
+        i.glyphicon.glyphicon-eye-open
+        View 
