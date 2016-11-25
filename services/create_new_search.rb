@@ -14,19 +14,21 @@ class CreateNewSearch
 
   register :call_api_to_search, lambda { |input|
     begin
-      Right(HTTP.post("#{Musicard.config.SPOTIFYSEARCH_API}/#{input}"))
+      http_result = HTTP.post("#{Musicard.config.SPOTIFYSEARCH_API}/#{input}")
+      Right(input: input, http_result: http_result)
     rescue
       Left(Error.new('Our servers failed - we are investigating!'))
     end
   }
 
-  register :return_api_result, lambda { |http_result|
-    data = http_result.body.to_s
-    if http_result.status == 200
-      Right(SongRepresenter.new(Song.new).from_json(data))
+  register :return_api_result, lambda { |params|
+    search = params[:http_result].body.to_s
+    songs = HTTP.get("#{Musicard.config.SPOTIFYSEARCH_API}/#{params[:input]}")
+    if params[:http_result].status == 200
+      Right(SongsRepresenter.new(Songs.new).from_json(songs.body))
     else
       message = ErrorFlattener.new(
-        ApiErrorRepresenter.new(ApiError.new).from_json(data)
+        ApiErrorRepresenter.new(ApiError.new).from_json(search)
       ).to_s
       Left(Error.new(message))
     end

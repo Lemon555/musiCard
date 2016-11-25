@@ -20,11 +20,9 @@ class Musicard < Sinatra::Base
     result = CreateNewSearch.call(params)
 
     if result.success?
-      @data = result.value
+      redirect "/#{params}"
     else
       flash[:error] = result.value.message
     end
-
-    redirect "/#{params}"
   end
 end

@@ -5,8 +5,8 @@ class SearchAPIdb
   extend Dry::Monads::Either::Mixin
 
   def self.call(input)
-    results = HTTP.get("#{Musicard.config.SPOTIFYSEARCH_API}/#{input}/?")
-    Right(SongRepresenter.new(Songs.new).from_json(results.body))
+    results = HTTP.get("#{Musicard.config.SPOTIFYSEARCH_API}/#{input}")
+    Right(SongsRepresenter.new(Songs.new).from_json(results.body))
   rescue
     Left(Error.new('Our servers failed - we are investigating!'))
   end
