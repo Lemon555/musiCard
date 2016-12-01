@@ -5,7 +5,7 @@ class Musicard < Sinatra::Base
   # Home page: show list of searched groups
   # Do a basic search from our API's DB
   get '/?' do
-    result = SearchAPIdb.call(params)
+    result = SearchAPIdb.call(params[:input])
     if result.success?
       @data = result.value
     else
@@ -17,11 +17,10 @@ class Musicard < Sinatra::Base
 
   # Get data from Spotify via our API
   post '/?' do
-    input = InputRequest.call(params)
-    result = CreateNewSearch.call(input)
+    result = CreateNewSearch.call(params[:search_input])
 
     if result.success?
-      redirect "/#{params}"
+      redirect to("/?input=#{params[:search_input]}")
     else
       flash[:error] = result.value.message
     end
