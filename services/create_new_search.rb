@@ -23,9 +23,8 @@ class CreateNewSearch
 
   register :return_api_result, lambda { |params|
     search = params[:http_result].body.to_s
-    songs = HTTP.get("#{Musicard.config.SPOTIFYSEARCH_API}/#{params[:input]}")
-    if params[:http_result].status == 200
-      Right(SongsRepresenter.new(Songs.new).from_json(songs.body))
+    if params[:http_result].status == 200 || params[:http_result].status == 422
+      Right(SearchAPIdb.call(params[:input]))
     else
       message = ErrorFlattener.new(
         ApiErrorRepresenter.new(ApiError.new).from_json(search)
