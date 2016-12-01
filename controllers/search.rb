@@ -17,7 +17,8 @@ class Musicard < Sinatra::Base
 
   # Get data from Spotify via our API
   post '/?' do
-    result = CreateNewSearch.call(params)
+    input = InputRequest.call(params)
+    result = CreateNewSearch.call(input)
 
     if result.success?
       redirect "/#{params}"
