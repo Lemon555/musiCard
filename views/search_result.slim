@@ -1,21 +1,37 @@
-.row
-  #custom-search-input.col-xs-12
-    form[action="" method="post"]
-      .input-group
-        input.form-control[type="text" placeholder="Search a song..." name="search_input"]
-        .input-group-btn
-          button.btn.btn-success[type="submit"]
-            i.glyphicon.glyphicon-search
+div class="row"
+  div class="col-xs-12" id="custom-search-input"
+    form action="" method=""
+      div class="input-group"
+        input{
+          type="text" name="search_input"
+          class="form-control"
+          placeholder="Search a song..."
+        }
+        div class="input-group-btn"
+          button{
+            class="btn btn-success" type="submit"
+          }
+            i class="glyphicon glyphicon-search"
 
-- @data&.songs&.each do |song|
-  .row
-    .col-xs-9
-      iframe[src="https://embed.spotify.com/?uri=spotify:track:#{song[:id]}"
-             width="100%" height="100" frameborder="0" allowtransparency="true"]
-    .col-xs-3
-      button.btn.btn-success[type="button" data-toggle="modal"
-                                data-target="#ImagePreviewModal#{song[:id]}"]
-        i.glyphicon.glyphicon-eye-open
-           View
 
-  include :image_preview_modal_partial
+div class="row"
+  div class="col-xs-12" style="margin-top: 50px"
+    - @data&.songs&.each do |song|
+    div class="col-xs-6"
+      iframe{
+        src="https://embed.spotify.com/?uri=spotify:track:#{song[:id]}"
+        width="100%" height="100"
+        frameborder="0" allowtransparency="true"
+      }
+
+    div class="col-xs-6"
+      button{
+        class="btn btn-success" type="button"
+        data-toggle="modal"
+        data-target="#ImagePreviewModal"
+        data-img_url="https://i.scdn.co/image/58ce427aaf12cf21f56be209216b0fb2ac0550f3"
+      }
+        i class="glyphicon glyphicon-eye-open"
+        View
+
+include :image_preview_modal_partial
