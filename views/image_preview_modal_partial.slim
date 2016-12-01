@@ -3,16 +3,15 @@ div id="ImagePreviewModal" class="modal fade" role="dialog"
     div class="modal-header"
       button type="button" class="close" data-dismiss="modal" &times;
     div class="modal-body"
-      img src="" width="100%" height="100%"
+      img src="#{song[:image]}" width="100%" height="100%"
     div class="modal-footer"
       button{
-        type='submit' id='track-image-submit' class='submit'
-        value='submit' class="btn btn-success"
-      }Select
+        type="submit" id="track-image-submit" class="btn btn-success"
+      }Choose
 
 javascript:
   $('#ImagePreviewModal').on('show.bs.modal', function(e) {
-  var img_url = $(e.relatedTarget).data('img_url');
-  var modal = $(this)
-  modal.find('.modal-body img').attr('src',img_url);
+    var img_url = $(e.relatedTarget).data('img_url');
+    var modal = $(this)
+    modal.find('.modal-body img').attr('src',img_url);
   })
