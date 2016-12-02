@@ -148,6 +148,8 @@ GEM
     unf_ext (0.0.7.2)
     watir (6.0.2)
       selenium-webdriver (~> 3.0)
+    watir-webdriver (0.9.9)
+      selenium-webdriver (>= 2.46.2)
     websocket (1.2.3)
     wisper (1.6.1)
     yml_reader (0.7)
@@ -172,14 +174,13 @@ DEPENDENCIES
   page-object
   puma
   rack-flash3
-  rack-test
   rake
   rerun
   roar
   sinatra
   slim
   tux
-  watir
+  watir-webdriver
 
 RUBY VERSION
    ruby 2.3.1p112
