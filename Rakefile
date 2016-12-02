@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+require 'rake/testtask'
+
 task :run do
   sh 'rerun "rackup -p 9000"'
 end

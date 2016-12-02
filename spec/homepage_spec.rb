@@ -4,7 +4,7 @@ require_relative 'spec_helper'
 describe 'Homepage' do
   before do
     unless @browser
-      # @headless = Headless.new
+      @headless = Headless.new
       @browser = Watir::Browser.new
     end
   end
@@ -36,9 +36,9 @@ describe 'Homepage' do
       @browser.button(id: 'search_btn').click
 
       # THEN: song should be listed on homepage
-      spotifywidget = browser.iframe(id: 'track_1')
+      spotifywidget = @browser.iframe(id: 'track_1')
       spotifywidget.src.must_include '76hfruVvmfQbw0eYn1nmeC'
-      view_btn = browser.button(id: 'track_1')
+      view_btn = @browser.button(id: 'track_1')
       view_btn.visible?.must_equal true
 
       # and danger flash notice should be seen
@@ -61,9 +61,9 @@ describe 'Homepage' do
       @browser.button(id: 'search_btn').click
 
       # THEN: song should be listed on homepage
-      spotifywidget = browser.iframe(id: 'track_1')
+      spotifywidget = @browser.iframe(id: 'track_1')
       spotifywidget.src.must_include '23L5CiUhw2jV1OIMwthR3S'
-      view_btn = browser.button(id: 'track_1')
+      view_btn = @browser.button(id: 'track_1')
       view_btn.visible?.must_equal true
 
       # and danger flash notice should be seen
