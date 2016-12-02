@@ -2,9 +2,13 @@
 
 # musiCard web application
 class Musicard < Sinatra::Base
-  # Home page: show list of searched groups
-  # Do a basic search from our API's DB
+  # Home page: Initial App Page
   get '/?' do
+    slim :search_result
+  end
+
+  # Do a basic search from our API's DB
+  get '/search/?' do
     result = SearchAPIdb.call(params[:input])
     if result.success?
       @data = result.value
@@ -20,9 +24,10 @@ class Musicard < Sinatra::Base
     result = CreateNewSearch.call(params[:search_input])
 
     if result.success?
-      redirect to("/?input=#{params[:search_input]}")
+      flash[:notice] = 'Searching Success!'
     else
       flash[:error] = result.value.message
     end
+    redirect to("/search/?input=#{params[:search_input]}")
   end
 end
