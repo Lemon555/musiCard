@@ -30,9 +30,7 @@ group :test do
   gem 'minitest'
   gem 'minitest-rg'
 
-  gem 'rack-test'
-
-  gem 'watir'
+  gem 'watir-webdriver'
   gem 'headless'
   gem 'page-object'
 end
