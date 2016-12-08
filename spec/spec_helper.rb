@@ -13,6 +13,8 @@ require './init.rb'
 EXISTS_SEARCH = 'love'
 NEW_SEARCH = 'cake'
 BAD_SEARCH = 'asfgsddhsdh'
+NEW_TRACK_ID = '76hfruVvmfQbw0eYn1nmeC'
+EXISTS_TRACK_ID = '23L5CiUhw2jV1OIMwthR3S'
 
 HOST = 'http://localhost:9000/'
 
