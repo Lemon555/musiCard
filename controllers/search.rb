@@ -7,6 +7,12 @@ class Musicard < Sinatra::Base
     slim :search_result
   end
 
+  # Edit Image page
+  get '/edit/?' do
+    @image_url = params[:img_url]
+    slim :edit_image
+  end
+
   # Do a basic search from our API's DB
   get '/search/?' do
     result = SearchAPIdb.call(params[:input])
