@@ -7,13 +7,19 @@ div id="ImagePreviewModal" class="modal fade" role="dialog"
       div class="modal-body"
         img src="" width="100%" height="100%"
       div class="modal-footer"
-        button{
-          type="submit" id="track-image-submit" class="btn btn-success"
-        }Choose
+        form role="form" action="/edit" method='get' id='choose-image-form'
+          input{
+            type='hidden' name='img_url' id='img_url'
+            value=""
+          }
+          button{
+            type="submit" id="track-image-submit" class="btn btn-success"
+          }Choose
 
 javascript:
   $('#ImagePreviewModal').on('show.bs.modal', function(e) {
     var img_url = $(e.relatedTarget).data('img_url');
     var modal = $(this)
     modal.find('.modal-body img').attr('src',img_url[0]);
+    modal.find('#img_url').attr('value',img_url[0]) ;
   })

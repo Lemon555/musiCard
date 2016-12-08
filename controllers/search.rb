@@ -4,7 +4,13 @@
 class Musicard < Sinatra::Base
   # Home page: Initial App Page
   get '/?' do
-    slim :search_result
+    slim :home, layout: false
+  end
+
+  # Edit Image page
+  get '/edit/?' do
+    @image_url = params[:img_url]
+    slim :edit_image
   end
 
   # Do a basic search from our API's DB
