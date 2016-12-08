@@ -27,13 +27,14 @@ class Musicard < Sinatra::Base
 
   # Get data from Spotify via our API
   post '/?' do
-    result = CreateNewSearch.call(params[:search_input])
+    input = params[:search_input].gsub(/\s/, '%20')
+    result = CreateNewSearch.call(input)
 
     if result.success?
       flash[:notice] = 'Searching Success!'
     else
       flash[:error] = result.value.message
     end
-    redirect to("/search/?input=#{params[:search_input]}")
+    redirect to("/search/?input=#{input}")
   end
 end
