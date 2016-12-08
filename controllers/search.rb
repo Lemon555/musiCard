@@ -4,7 +4,7 @@
 class Musicard < Sinatra::Base
   # Home page: Initial App Page
   get '/?' do
-    slim :search_result
+    slim :home, layout: false
   end
 
   # Edit Image page
