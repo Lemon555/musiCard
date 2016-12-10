@@ -13,25 +13,22 @@ class Homepage
   indexed_property(
     :music_players,
     [
-      [:iframe, :spotify_player, { id: 'track_[%s]' }],
-      [:button, :view_btn, { id: 'track_[%s]' }]
+      [:div, :result_row, { id: 'track_%s' }],
+      # [:in_iframe, :spotify_player, { id: 'track_%s' }],
+      [:button, :view_btn, { id: 'track_%s' }]
     ]
   )
 
   div(:image_preview, class: 'modal-dialog')
-  img(:album_image, id: 'album_image')
+  image(:album_image, id: 'album_image')
   button(:img_submit, id: 'track-image-submit')
 
   def first_row
     music_players[0]
   end
 
-  def last_low
-    music_players[music_players_rows_count - 1]
-  end
-
-  def wait_for_music_players
-    wait_until { last_low.spotify_player_element.visible? }
+  def first_music_player
+    music_players[0].spotify_player_element
   end
 
   def wait_for_image_preview_modal

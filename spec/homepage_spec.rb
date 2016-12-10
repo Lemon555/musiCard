@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 require_relative 'spec_helper'
+require_relative 'pages/homepage_page.rb'
 
 describe 'Homepage' do
   before do
     unless @browser
-      @headless = Headless.new
+      # @headless = Headless.new
       @browser = Watir::Browser.new
     end
   end
@@ -19,9 +20,9 @@ describe 'Homepage' do
     it '(HAPPY) should see website features' do
       # GIVEN
       visit Homepage do |page|
-        page.heading.text.must_include 'musiCard'
-        page.search_input.visible?.must_equal true
-        page.search_btn.visible?.must_equal true
+        page.heading.must_include 'musiCard'
+        page.search_input_element.visible?.must_equal true
+        page.search_btn?.must_equal true
       end
     end
   end
@@ -34,18 +35,19 @@ describe 'Homepage' do
         page.make_a_search(NEW_SEARCH)
 
         # THEN: song should be listed on homepage
-        page.wait_for_music_players
-        page.first_row.spotify_player_element.src.must_include NEW_TRACK_ID
-        page.first_row.view_btn.visible?.must_equal true
+        spotifywidget = @browser.iframe(id: 'track_0')
+        spotifywidget.src.must_include NEW_TRACK_ID
+        # page.first_music_player.src.must_include NEW_TRACK_ID
+        page.first_row.view_btn?.must_equal true
 
         # and success flash notice should be seen
         page.flash_notice.must_include 'Success'
-        page.flash_notice.attribute(:class).must_include 'success'
+        page.flash_notice_element.attribute(:class).must_include 'success'
 
         # Modal test
         page.wait_for_image_preview_modal
-        page.album_image_element.src.must_include 'https://i.scdn.co/'
-        page.img_submit.visible?.must_equal true
+        page.album_image_element.attribute(:src).must_include HEAD_OF_IMAGE
+        page.img_submit?.must_equal true
       end
     end
 
@@ -56,18 +58,19 @@ describe 'Homepage' do
         page.make_a_search(EXISTS_SEARCH)
 
         # THEN: song should be listed on homepage
-        page.wait_for_music_players
-        page.first_row.spotify_player_element.src.must_include EXISTS_TRACK_ID
-        page.first_row.view_btn.visible?.must_equal true
+        spotifywidget = @browser.iframe(id: 'track_1')
+        spotifywidget.src.must_include EXISTS_TRACK_ID
+        # page.first_music_player.src.must_include EXISTS_TRACK_ID
+        page.first_row.view_btn?.must_equal true
 
         # and success flash notice should be seen
         page.flash_notice.must_include 'Success'
-        page.flash_notice.attribute(:class).must_include 'success'
+        page.flash_notice_element.attribute(:class).must_include 'success'
 
         # Modal test
         page.wait_for_image_preview_modal
-        page.album_image_element.src.must_include 'https://i.scdn.co/'
-        page.img_submit.visible?.must_equal true
+        page.album_image_element.attribute(:src).must_include HEAD_OF_IMAGE
+        page.img_submit?.must_equal true
       end
     end
 
@@ -78,7 +81,7 @@ describe 'Homepage' do
         page.make_a_search(BAD_SEARCH)
 
         # and danger flash notice should be seen
-        page.flash_notice.attribute(:class).must_include 'danger'
+        page.flash_notice_element.attribute(:class).must_include 'danger'
       end
     end
   end
