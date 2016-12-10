@@ -8,7 +8,7 @@ require 'watir'
 require 'headless'
 require 'page-object'
 
-require '../init.rb'
+require './init.rb'
 
 EXISTS_SEARCH = 'love'
 NEW_SEARCH = 'cake'
