@@ -20,7 +20,8 @@ describe 'Homepage' do
     it '(HAPPY) should see website features' do
       # GIVEN
       visit Homepage do |page|
-        page.heading.must_include 'musiCard'
+        page.header_link_element.text.must_include 'musiCard'
+        page.heading.must_include 'Music with Quotes'
         page.search_input_element.visible?.must_equal true
         page.search_btn?.must_equal true
       end
@@ -33,16 +34,15 @@ describe 'Homepage' do
       visit Homepage do |page|
         # WHEN: add a new search
         page.make_a_search(NEW_SEARCH)
+        page.header_link_element.text.must_include 'musiCard'
+        page.search_input_element.visible?.must_equal true
+        page.search_btn?.must_equal true
 
         # THEN: song should be listed on homepage
         spotifywidget = @browser.iframe(id: 'track_0')
         spotifywidget.src.must_include NEW_TRACK_ID
         # page.first_music_player.src.must_include NEW_TRACK_ID
         page.first_row.view_btn?.must_equal true
-
-        # and success flash notice should be seen
-        page.flash_notice.must_include 'Success'
-        page.flash_notice_element.attribute(:class).must_include 'success'
 
         # Modal test
         page.wait_for_image_preview_modal
@@ -56,16 +56,15 @@ describe 'Homepage' do
       visit Homepage do |page|
         # WHEN: add an existing searching word
         page.make_a_search(EXISTS_SEARCH)
+        page.header_link_element.text.must_include 'musiCard'
+        page.search_input_element.visible?.must_equal true
+        page.search_btn?.must_equal true
 
         # THEN: song should be listed on homepage
         spotifywidget = @browser.iframe(id: 'track_1')
         spotifywidget.src.must_include EXISTS_TRACK_ID
         # page.first_music_player.src.must_include EXISTS_TRACK_ID
         page.first_row.view_btn?.must_equal true
-
-        # and success flash notice should be seen
-        page.flash_notice.must_include 'Success'
-        page.flash_notice_element.attribute(:class).must_include 'success'
 
         # Modal test
         page.wait_for_image_preview_modal
