@@ -5,6 +5,7 @@ class Homepage
 
   page_url 'http://localhost:9000/'
 
+  a(:header_link, id: 'header-link')
   h1(:heading)
   div(:flash_notice, class: 'alert')
   text_field(:search_input, name: 'search_input')
