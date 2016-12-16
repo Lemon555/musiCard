@@ -37,4 +37,5 @@ end
 
 group :development, :production do
   gem 'tux'
+  gem 'concurrent-ruby'
 end
