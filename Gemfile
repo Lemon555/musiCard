@@ -11,6 +11,7 @@ gem 'slim'
 gem 'rack-flash3'
 
 gem 'http'
+gem 'imgur-api'
 
 gem 'roar'
 gem 'multi_json'

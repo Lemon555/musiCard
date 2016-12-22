@@ -37,4 +37,17 @@ class Musicard < Sinatra::Base
     end
     redirect to("/search/?input=#{input}")
   end
+
+  # Save image to Imgur
+  post '/image/?' do
+    result = SaveToImgur.call(params[:url])
+    if result.success?
+      @imgurlink = result.value
+      flash[:notice] = 'Saved!'
+    else
+      flash[:error] = result.value.message
+    end
+
+    redirect to("/edit/?img_url=#{@imgurlink}")
+  end
 end

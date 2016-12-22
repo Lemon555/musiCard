@@ -72,7 +72,11 @@ GEM
       domain_name (~> 0.5)
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    imgur-api (0.0.4)
+      httparty
     inflecto (0.0.2)
     json (2.0.2)
     listen (3.1.5)
@@ -83,6 +87,7 @@ GEM
     minitest-rg (5.2.0)
       minitest (~> 5.0)
     multi_json (1.12.1)
+    multi_xml (0.6.0)
     net-http-persistent (2.9.4)
     page-object (2.0.0)
       net-http-persistent (~> 2.9.4)
@@ -168,6 +173,7 @@ DEPENDENCIES
   flog
   headless
   http
+  imgur-api
   json
   minitest
   minitest-rg

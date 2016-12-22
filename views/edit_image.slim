@@ -1,2 +1,78 @@
-div class="row" id="image"
-  img src="#{@image_url}"
+script src="https://dme0ih8comzn4.cloudfront.net/imaging/v3/editor.js"
+
+javascript:
+  var featherEditor = new Aviary.Feather({
+      apiKey: '#{Musicard.config.ADOBE_IO_ID}',
+      onSave: function(imageID, newURL) {
+          var img = document.getElementById(imageID);
+          featherEditor.close();
+          img.src = post_to_url("/image", newURL);
+      }
+  });
+
+  function launchEditor(id, src) {
+      featherEditor.launch({
+          image: id,
+          url: src
+      });
+      return false;
+  }
+
+  function openEdit(){
+    return launchEditor('editableimage1', document.getElementById("editableimage1").src);
+  }
+  
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '538241709633900',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+  
+  function share_to_FB() {
+    FB.ui({
+      method: 'share',
+      display: 'popup',
+      href: 'https://musicard.herokuapp.com/',
+    }, function(response){});
+  }
+
+  function post_to_url(path, params) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", path);
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "url");
+    hiddenField.setAttribute("value", params);
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+  }
+  
+div class="row"
+  div class="col-xs-6 col-sm-4 col-sm-offset-2" align="center"
+    <button class="btn btn-info btn-block" id=​"edit-img" onclick="openEdit()">
+      <span class="glyphicon glyphicon-edit" aria-hidden="true"> Edit
+    </button>
+  div class="col-xs-6 col-sm-4" align="center"
+    <button class="btn btn-primary btn-block" onclick="share_to_FB()">
+      <span class="glyphicon glyphicon-share" aria-hidden="true"> FB share
+    </button>
+br
+
+div class="row"
+  div class="col-sm-8 col-sm-offset-2" align="center"
+    img{
+      id="editableimage1" src="#{@image_url}"
+      style="width: 100%; height: auto;"
+    } 
