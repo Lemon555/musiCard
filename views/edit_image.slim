@@ -5,8 +5,8 @@ javascript:
       apiKey: '#{Musicard.config.ADOBE_IO_ID}',
       onSave: function(imageID, newURL) {
           var img = document.getElementById(imageID);
-          img.src = newURL;
           featherEditor.close();
+          img.src = post_to_url("/image", newURL);
       }
   });
 
@@ -46,6 +46,19 @@ javascript:
     }, function(response){});
   }
 
+  function post_to_url(path, params) {
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", path);
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "url");
+    hiddenField.setAttribute("value", params);
+    form.appendChild(hiddenField);
+    document.body.appendChild(form);
+    form.submit();
+  }
+  
 div class="row"
   div class="col-xs-6 col-sm-4 col-sm-offset-2" align="center"
     <button class="btn btn-info btn-block" id=​"edit-img" onclick="openEdit()">
