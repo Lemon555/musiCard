@@ -15,12 +15,12 @@ class CreateNewSearch
 
   register :split_sentence, lambda { |input|
     begin
-      words = []
       if input.include? '%20'
         words = input.split('%20')
         words.unshift(input)
         # unshift will add a new item to the beginning of an array.
       else
+        words = []
         words.push(input)
       end
       Right(words)
@@ -31,12 +31,8 @@ class CreateNewSearch
 
   register :call_api_to_search, lambda { |search_terms|
     begin
-      all_http_results = []
-      search_terms.map do |word|
-        result = HTTP.post("#{Musicard.config.SPOTIFYSEARCH_API}/#{word}")
-        all_http_results.push(result)
-      end
-      Right(all_http_results)
+      search_result = async_post_call(search_terms)
+      Right(search_result)
     rescue
       Left(Error.new('(create) Our servers failed - we are investigating!'))
     end
@@ -58,4 +54,15 @@ class CreateNewSearch
       Left(Error.new(@message))
     end
   }
+
+  private_class_method
+
+  def self.async_post_call(search_terms)
+    promised_searches = search_terms.map do |word|
+      Concurrent::Promise.execute do
+        HTTP.post("#{Musicard.config.SPOTIFYSEARCH_API}/#{word}")
+      end
+    end
+    promised_searches.map(&:value)
+  end
 end
