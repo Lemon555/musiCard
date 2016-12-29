@@ -12,6 +12,10 @@ div id="ImagePreviewModal" class="modal fade" role="dialog"
             type='hidden' name='img_url' id='img_url'
             value=""
           }
+          input{
+            type='hidden' name='track_url' id='track_url'
+            value=""
+          }
           button{
             type="submit" id="track-image-submit" class="btn btn-success"
           }Choose
@@ -19,7 +23,9 @@ div id="ImagePreviewModal" class="modal fade" role="dialog"
 javascript:
   $('#ImagePreviewModal').on('show.bs.modal', function(e) {
     var img_url = $(e.relatedTarget).data('img_url');
+    var track_url = $(e.relatedTarget).data('track_url');
     var modal = $(this)
     modal.find('.modal-body img').attr('src',img_url[0]);
     modal.find('#img_url').attr('value',img_url[0]) ;
+    modal.find('#track_url').attr('value',track_url) ;
   })

@@ -7,6 +7,10 @@ javascript:
           var img = document.getElementById(imageID);
           featherEditor.close();
           img.src = post_to_url("/image", newURL);
+          var img_meta = document.createElement("meta");
+          img_meta.setAttribute("property", "og:image");
+          img_meta.setAttribute("content", img.src);
+          document.getElementsByTagName('head')[0].appendChild(img_meta);
       }
   });
 
@@ -40,9 +44,13 @@ javascript:
   
   function share_to_FB() {
     FB.ui({
-      method: 'share',
-      display: 'popup',
-      href: 'https://musicard.herokuapp.com/edit',
+      method: 'feed',
+      //link: document.getElementById("track_url").value,
+      //link: 'https://open.spotify.com/track/6NMNgWgEAzde5M8U3lc6FN',
+      title: 'An example title',
+      caption: 'An example caption',
+      description: 'An example description',
+      picture: document.getElementById("editableimage1").src,
     }, function(response){});
   }
 
@@ -59,6 +67,17 @@ javascript:
     form.submit();
   }
   
+  function copyToClipBoard() {
+    // select the text
+    document.getElementById("inputLink").select();
+    try {
+      // execute the copy command  on selected the text in copy area
+      var copyStatus = document.execCommand('copy');
+    } catch (error) {
+      alert('Oops!, unable to copy');
+    }
+  }
+  
 div class="row"
   div class="col-xs-6 col-sm-4 col-sm-offset-2" align="center"
     <button class="btn btn-info btn-block" id=​"edit-img" onclick="openEdit()">
@@ -69,6 +88,18 @@ div class="row"
       <span class="glyphicon glyphicon-share" aria-hidden="true"> FB share
     </button>
 br
+
+div class="row"
+  div class="col-xs-12 col-sm-8 col-sm-offset-2"
+    p copy the music link to clipboard:
+    div class="input-group"
+      input type="text" class="form-control" id="inputLink" value="#{@track_url}"
+      div class="input-group-btn"
+        button class="btn btn-default" type="submit" onclick="copyToClipBoard()"
+          i class="glyphicon glyphicon-copy" 
+
+br
+input type='hidden' id='track_url' value="#{@track_url}"
 
 div class="row"
   div class="col-sm-8 col-sm-offset-2" align="center"
