@@ -6,8 +6,9 @@ javascript:
       tools: ['text', 'draw', 'effects', 'frames', 'focus', 'colorsplash', 'vignette'],
       onSave: function(imageID, newURL) {
           var img = document.getElementById(imageID);
+          var tracklink = document.getElementById("inputLink").value;
           featherEditor.close();
-          img.src = post_to_url("/image", newURL);
+          img.src = post_to_url("/image", newURL, tracklink);
           var img_meta = document.createElement("meta");
           img_meta.setAttribute("property", "og:image");
           img_meta.setAttribute("content", img.src);
@@ -46,16 +47,11 @@ javascript:
   function share_to_FB() {
     FB.ui({
       method: 'feed',
-      //link: document.getElementById("track_url").value,
-      //link: 'https://open.spotify.com/track/6NMNgWgEAzde5M8U3lc6FN',
-      title: 'An example title',
-      caption: 'An example caption',
-      description: 'An example description',
       picture: document.getElementById("editableimage1").src,
     }, function(response){});
   }
 
-  function post_to_url(path, params) {
+  function post_to_url(path, params, tracklink) {
     var form = document.createElement("form");
     form.setAttribute("method", "post");
     form.setAttribute("action", path);
@@ -64,6 +60,11 @@ javascript:
     hiddenField.setAttribute("name", "url");
     hiddenField.setAttribute("value", params);
     form.appendChild(hiddenField);
+    var trackField = document.createElement("input");
+    trackField.setAttribute("type", "hidden");
+    trackField.setAttribute("name", "link");
+    trackField.setAttribute("value", tracklink);
+    form.appendChild(trackField);
     document.body.appendChild(form);
     form.submit();
   }
