@@ -22,14 +22,18 @@ class CreateNewSearch
   }
 
   register :return_api_result, lambda { |params|
-    search = params[:http_result].body.to_s
-    if params[:http_result].status == 200 || params[:http_result].status == 422
-      Right('Success')
-    else
-      message = ErrorFlattener.new(
-        ApiErrorRepresenter.new(ApiError.new).from_json(search)
-      ).to_s
-      Left(Error.new(message))
+    flag = false
+    params.each do |http_result|
+      if http_result.status != 200 && http_result.status != 422
+        search = http_result.body.to_s
+        @message = ErrorFlattener.new(
+          ApiErrorRepresenter.new(ApiError.new).from_json(search)
+        ).to_s
+        break
+      else
+        flag = true
+      end
     end
+    flag ? Right('Success') : Left(Error.new(@message))
   }
 end
