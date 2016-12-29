@@ -2,7 +2,6 @@
 
 # Gets list of all groups from API
 class CreateNewSearch
-
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
 
@@ -33,20 +32,19 @@ class CreateNewSearch
   }
 
   register :return_api_result, lambda { |params|
-    begin
-      params.each do |http_result|
-        if http_result.status != 200 || http_result.status != 422
-          search = http_result.body.to_s
-          @message = ErrorFlattener.new(
-            ApiErrorRepresenter.new(ApiError.new).from_json(search)
-          ).to_s
-          break
-        end
+    flag = false
+    params.each do |http_result|
+      if http_result.status != 200 && http_result.status != 422
+        search = http_result.body.to_s
+        @message = ErrorFlattener.new(
+          ApiErrorRepresenter.new(ApiError.new).from_json(search)
+        ).to_s
+        break
+      else
+        flag = true
       end
-      Right('Success')
-    rescue
-      Left(Error.new(@message))
     end
+    flag ? Right('Success') : Left(Error.new(@message))
   }
 
   private_class_method
