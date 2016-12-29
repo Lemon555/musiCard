@@ -3,6 +3,7 @@ script src="https://dme0ih8comzn4.cloudfront.net/imaging/v3/editor.js"
 javascript:
   var featherEditor = new Aviary.Feather({
       apiKey: '#{Musicard.config.ADOBE_IO_ID}',
+      tools: ['text', 'draw', 'effects', 'frames', 'focus', 'colorsplash', 'vignette'],
       onSave: function(imageID, newURL) {
           var img = document.getElementById(imageID);
           featherEditor.close();
@@ -21,7 +22,7 @@ javascript:
   function openEdit(){
     return launchEditor('editableimage1', document.getElementById("editableimage1").src);
   }
-  
+
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '538241709633900',
@@ -37,7 +38,7 @@ javascript:
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-  
+
   function share_to_FB() {
     FB.ui({
       method: 'share',
@@ -58,7 +59,7 @@ javascript:
     document.body.appendChild(form);
     form.submit();
   }
-  
+
 div class="row"
   div class="col-xs-6 col-sm-4 col-sm-offset-2" align="center"
     <button class="btn btn-info btn-block" id=​"edit-img" onclick="openEdit()">
@@ -75,4 +76,4 @@ div class="row"
     img{
       id="editableimage1" src="#{@image_url}"
       style="width: 100%; height: auto;"
-    } 
+    }
