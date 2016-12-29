@@ -10,6 +10,7 @@ class Musicard < Sinatra::Base
   # Edit Image page
   get '/edit/?' do
     @image_url = params[:img_url]
+    @track_url = params[:track_url]
     slim :edit_image
   end
 
