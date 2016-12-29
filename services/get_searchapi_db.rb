@@ -2,6 +2,8 @@
 
 # Gets list of all songs of a search from API
 class SearchAPIdb
+  include WordMagic
+
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
 
@@ -14,27 +16,17 @@ class SearchAPIdb
 
   register :split_sentence, lambda { |input|
     begin
-      if input.include? '%20'
-        words = input.split('%20')
-        words.unshift(input)
-        # unshift will add a new item to the beginning of an array.
-      else
-        words = []
-        words.push(input)
-      end
+      words = input.include?('%20') ? [input, input.split('%20')].flatten : [input]
       Right(words)
     rescue
-      Left(Error.new('Failed to split the input sentence!'))
+      Left(Error.new('(Get) Failed to split the input sentence!'))
     end
   }
 
   register :call_api_to_get_existed_songs, lambda { |search_terms|
     begin
       search_result = async_get_call(search_terms)
-      songs_arr = search_result.map do |songs|
-        SongsRepresenter.new(Songs.new).from_json(songs.body)
-      end
-      Right(songs_arr)
+      Right(search_result)
     rescue
       Left(Error.new('(get) Our servers failed - we are investigating!'))
     end
@@ -45,7 +37,8 @@ class SearchAPIdb
   def self.async_get_call(search_terms)
     promised_searches = search_terms.map do |word|
       Concurrent::Promise.execute do
-        HTTP.get("#{Musicard.config.SPOTIFYSEARCH_API}/#{word}")
+        result = HTTP.get("#{Musicard.config.SPOTIFYSEARCH_API}/#{word}")
+        SongsRepresenter.new(Songs.new).from_json(result.body)
       end
     end
     promised_searches.map(&:value)
