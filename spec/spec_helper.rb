@@ -11,9 +11,9 @@ require 'page-object'
 require './init.rb'
 
 EXISTS_SEARCH = 'love'
-NEW_SEARCH = 'all I want'
+NEW_SEARCH = 'cake'
 BAD_SEARCH = 'asfgsddhsdh'
-NEW_TRACK_ID = '0bYg9bo50gSsH3LtXe2SQn'
+NEW_TRACK_ID = '76hfruVvmfQbw0eYn1nmeC'
 EXISTS_TRACK_ID = '23L5CiUhw2jV1OIMwthR3S'
 HEAD_OF_IMAGE = 'https://i.scdn.co/'
 
