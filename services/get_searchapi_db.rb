@@ -2,7 +2,6 @@
 
 # Gets list of all songs of a search from API
 class SearchAPIdb
-  include WordMagic
 
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin

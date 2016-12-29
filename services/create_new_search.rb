@@ -2,7 +2,6 @@
 
 # Gets list of all groups from API
 class CreateNewSearch
-  include WordMagic
 
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
