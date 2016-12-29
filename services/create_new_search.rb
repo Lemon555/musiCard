@@ -7,17 +7,27 @@ class CreateNewSearch
 
   def self.call(input)
     Dry.Transaction(container: self) do
+      step :split_sentence
       step :call_api_to_search
       step :return_api_result
     end.call(input)
   end
 
-  register :call_api_to_search, lambda { |input|
+  register :split_sentence, lambda { |input|
     begin
-      http_result = HTTP.post("#{Musicard.config.SPOTIFYSEARCH_API}/#{input}")
-      Right(input: input, http_result: http_result)
+      words = input.include?('%20') ? [input, input.split('%20')].flatten : [input]
+      Right(words)
     rescue
-      Left(Error.new('Our servers failed - we are investigating!'))
+      Left(Error.new('(Post) Failed to split the input sentence!'))
+    end
+  }
+
+  register :call_api_to_search, lambda { |search_terms|
+    begin
+      search_result = async_post_call(search_terms)
+      Right(search_result)
+    rescue
+      Left(Error.new('(create) Our servers failed - we are investigating!'))
     end
   }
 
@@ -36,4 +46,15 @@ class CreateNewSearch
     end
     flag ? Right('Success') : Left(Error.new(@message))
   }
+
+  private_class_method
+
+  def self.async_post_call(search_terms)
+    promised_searches = search_terms.map do |word|
+      Concurrent::Promise.execute do
+        HTTP.post("#{Musicard.config.SPOTIFYSEARCH_API}/#{word}")
+      end
+    end
+    promised_searches.map(&:value)
+  end
 end

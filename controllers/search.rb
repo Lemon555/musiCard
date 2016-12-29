@@ -16,7 +16,8 @@ class Musicard < Sinatra::Base
 
   # Do a basic search from our API's DB
   get '/search/?' do
-    result = SearchAPIdb.call(params[:input])
+    input = params[:input].gsub(/\s/, '%20')
+    result = SearchAPIdb.call(input)
     if result.success?
       @data = result.value
     else
