@@ -39,7 +39,7 @@ describe 'Homepage' do
         page.search_btn?.must_equal true
 
         # THEN: song should be listed on homepage
-        spotifywidget = @browser.iframe(id: 'track_00')
+        spotifywidget = @browser.iframe(id: 'track_1')
         spotifywidget.src.must_include NEW_TRACK_ID
         # page.first_music_player.src.must_include NEW_TRACK_ID
         page.first_row.view_btn?.must_equal true
