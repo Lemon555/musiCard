@@ -2,6 +2,7 @@
 
 # Gets list of all groups from API
 class CreateNewSearch
+
   extend Dry::Monads::Either::Mixin
   extend Dry::Container::Mixin
 
@@ -15,17 +16,10 @@ class CreateNewSearch
 
   register :split_sentence, lambda { |input|
     begin
-      if input.include? '%20'
-        words = input.split('%20')
-        words.unshift(input)
-        # unshift will add a new item to the beginning of an array.
-      else
-        words = []
-        words.push(input)
-      end
+      words = input.include?('%20') ? [input, input.split('%20')].flatten : [input]
       Right(words)
     rescue
-      Left(Error.new('Failed to split the input sentence!'))
+      Left(Error.new('(Post) Failed to split the input sentence!'))
     end
   }
 
