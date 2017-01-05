@@ -2,6 +2,7 @@ doctype html
 html
   head
     title musiCard
+    link rel="icon" href="http://i.imgur.com/VmNBop6.png"
     meta[http-equiv="X-UA-Compatible" content="IE=edge"]
     meta[name="viewport" content="width=device-width, initial-scale=1"]
     / Bootstrap CSS and theme (Sandstone Theme)
@@ -51,12 +52,12 @@ html
           div class="input-group-btn"
             button class="btn btn-default" type="submit" id="search_btn"
               i class="glyphicon glyphicon-search"
-  
+
   javascript:
     $(document).ready(function(){
       if($("#search_input").val() == "")
         $("#search_btn").addClass("disabled").attr("disabled", true);
-       
+
       $("#search_input").on('keyup keydown keypress change paste', function(){
         var empty = ( $("#search_input").val() == '' );
         $("#search_btn").toggleClass('disabled', empty);

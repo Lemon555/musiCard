@@ -88,8 +88,7 @@ javascript:
     el.readOnly = readOnly; // Restore previous readOnly status
     if (document.queryCommandSupported("copy")){
       var successful = document.execCommand('copy');
-      if (successful) alert("Copied to clipboard.");
-      else alert("Press CTRL+C to copy");
+      if (successful == false) alert("Your device doesn't support universal clipboard, Press CTRL+C to copy.");
     }
     else
     {
@@ -119,7 +118,7 @@ div class="row"
       div class="input-group-btn"
         button{
           class="btn btn-default" type="submit" onclick="copyToClipBoard(document.getElementById('inputLink'))"
-          data-toggle="tooltip" title="Copy to clipboard!"
+          data-toggle="tooltip" title="Press here on iOS!"
         }
           i class="glyphicon glyphicon-copy"
 
