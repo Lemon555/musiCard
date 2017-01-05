@@ -19,7 +19,8 @@ class Musicard < Sinatra::Base
     input = params[:input].gsub(/\s/, '%20')
     result = SearchAPIdb.call(input)
     if result.success?
-      @data = result.value
+      @data = result.value[:result]
+      @search_terms = result.value[:search_terms]
     else
       flash[:error] = result.value.message
     end
