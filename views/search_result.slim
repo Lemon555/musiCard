@@ -1,13 +1,24 @@
 div class="btn-group"
   -@search_terms&.each_with_index do |term, i|
     -tag = term.gsub('%20', ' ')
-    a href="##{tag}" class="btn btn-default" #{tag}
+    button id="#{tag}" class="btn btn-default input_link" #{tag}
+
+javascript:
+  $(function(){
+      $(".input_link").click(function(){
+          $.scrollTo("#"+$(this).attr("id")+"_div",500);
+      });
+  });
 
 br
 -@data&.each_with_index do |search, i|
   -tag = @search_terms[i].gsub('%20', ' ')
+
+  div id="#{tag}_div"
   br
-  h3: a name="#{tag}" #{tag}
+  br
+  br
+  h3 class="text-muted" #{tag} 
   -search&.songs&.each_with_index do |song, j|
     div class="row" id="track_#{i}#{j}"
       div class="col-md-11 col-sm-10 col-xs-8"
