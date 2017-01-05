@@ -10,7 +10,6 @@ class Musicard < Sinatra::Base
   # Edit Image page
   get '/edit/?' do
     @image_url = params[:img_url]
-    @track_url = params[:track_url]
     slim :edit_image
   end
 
@@ -19,7 +18,8 @@ class Musicard < Sinatra::Base
     input = params[:input].gsub(/\s/, '%20')
     result = SearchAPIdb.call(input)
     if result.success?
-      @data = result.value
+      @data = result.value[:result]
+      @search_terms = result.value[:search_terms]
     else
       flash[:error] = result.value.message
     end
@@ -43,7 +43,6 @@ class Musicard < Sinatra::Base
   # Save image to Imgur
   post '/image/?' do
     result = SaveToImgur.call(params[:url])
-    @track_url = params[:link]
     if result.success?
       @imgurlink = result.value
       flash[:notice] = 'Saved!'
@@ -51,6 +50,6 @@ class Musicard < Sinatra::Base
       flash[:error] = result.value.message
     end
 
-    redirect to("/edit/?img_url=#{@imgurlink}&track_url=#{@track_url}")
+    redirect to("/edit/?img_url=#{@imgurlink}")
   end
 end

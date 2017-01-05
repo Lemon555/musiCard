@@ -24,7 +24,7 @@ class SearchAPIdb
   register :call_api_to_get_existed_songs, lambda { |search_terms|
     begin
       search_result = async_get_call(search_terms)
-      Right(search_result)
+      Right(result: search_result, search_terms: search_terms)
     rescue
       Left(Error.new('(get) Our servers failed - we are investigating!'))
     end
