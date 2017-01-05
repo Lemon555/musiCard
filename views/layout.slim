@@ -11,10 +11,11 @@ html
       rel="stylesheet" integrity="sha384-G3G7OsJCbOk1USkOY4RfeX1z27YaWrZ1YuaQ5tbuawed9IoreRDpWpTkZLXQfPm3"
       crossorigin="anonymous"
     }
+    <script src="https://use.fontawesome.com/f2eb7165ca.js"></script>
     link href="https://fonts.googleapis.com/css?family=Work+Sans:200" rel="stylesheet"
     / Custom CSS
     / link rel='stylesheet' href='/style.css'
-  body
+  body style='background-color:#282828;'
     / JQuery and Bootstrap JS
     script{
       src="https://code.jquery.com/jquery-1.12.4.min.js"
@@ -49,7 +50,7 @@ javascript:
   $(document).ready(function(){
     if($("#search_input").val() == "")
       $("#search_btn").addClass("disabled").attr("disabled", true);
-     
+
     $("#search_input").on('keyup keydown keypress change paste', function(){
       var empty = ( $("#search_input").val() == '' );
       $("#search_btn").toggleClass('disabled', empty);

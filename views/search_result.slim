@@ -1,7 +1,7 @@
 div class="btn-group"
   -@search_terms&.each_with_index do |term, i|
     -tag = term.gsub('%20', ' ')
-    a href="##{tag}" class="btn btn-primary" #{tag}
+    a href="##{tag}" class="btn btn-default" #{tag}
 
 br
 -@data&.each_with_index do |search, i|

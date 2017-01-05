@@ -79,7 +79,7 @@ javascript:
       alert('Oops!, unable to copy');
     }
   }
-  
+
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
@@ -87,10 +87,10 @@ javascript:
 div class="row"
   div class="col-xs-6 col-sm-4 col-sm-offset-2" align="center"
     button class="btn btn-info btn-block" id="edit-img" onclick="openEdit()"
-      span class="glyphicon glyphicon-edit" aria-hidden="true" Edit
+      span class="glyphicon glyphicon-pencil" aria-hidden="true" &nbsp;Edit
   div class="col-xs-6 col-sm-4" align="center"
     button id="sharefb" class="btn btn-primary btn-block" onclick="share_to_FB()"
-      span class="glyphicon glyphicon-share" aria-hidden="true" FB share
+      span class="fa fa-facebook" aria-hidden="true" &nbsp;&nbsp;&nbsp;FB share
 br
 
 div class="row"
@@ -100,7 +100,7 @@ div class="row"
       input type="text" class="form-control" id="inputLink" value="#{@track_url}"
       div class="input-group-btn"
         button{
-          class="btn btn-default" type="submit" onclick="copyToClipBoard()" 
+          class="btn btn-default" type="submit" onclick="copyToClipBoard()"
           data-toggle="tooltip" title="Copy to clipboard!"
         }
           i class="glyphicon glyphicon-copy"
@@ -114,17 +114,17 @@ div class="row"
       id="editableimage1" src="#{@image_url}"
       style="width: 100%; height: auto;"
     }
-  
+
 div class="tooltip top" role="tooltip"
   div class="tooltip-arrow"
   div class="tooltip-inner"
     Copy to clipboard!
-    
+
 javascript:
   $(document).ready(function(){
     if($(window).width() < 780)
       $("#edit-img").addClass("disabled").attr("disabled", true);
-     
+
     $(window).resize(function(){
       var empty = ( $(window).width() < 780 );
       $("#edit-img").toggleClass('disabled', empty);
