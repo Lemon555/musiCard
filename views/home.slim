@@ -47,7 +47,22 @@ html
       br
       form action="/" method="post"
         div class="input-group"
-          input type="text" class="form-control" placeholder="Search to start..." name="search_input"
+          input id="search_input" type="text" class="form-control" placeholder="Search to start..." name="search_input"
           div class="input-group-btn"
             button class="btn btn-default" type="submit" id="search_btn"
               i class="glyphicon glyphicon-search"
+  
+  javascript:
+    $(document).ready(function(){
+      if($("#search_input").val() == "")
+        $("#search_btn").addClass("disabled").attr("disabled", true);
+       
+      $("#search_input").on('keyup keydown keypress change paste', function(){
+        var empty = ( $("#search_input").val() == '' );
+        $("#search_btn").toggleClass('disabled', empty);
+        if(empty)
+          $("#search_btn").attr("disabled", empty);
+        else
+          $("#search_btn").attr("disabled", empty);
+      });
+    });
